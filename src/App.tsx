@@ -20,7 +20,7 @@ export const App = () => {
 
   const uri = isLocalSource
     ? 'file:///pkg/assets/index.html'
-    : 'https://magenta-cobbler-798f95.netlify.app/';
+    : 'https://mrozwadowski.com/drm-example/';
 
   return (
     <View style={styles.container}>
