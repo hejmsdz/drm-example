@@ -6,14 +6,16 @@
   <title>Video player test</title>
 </head>
 <body>
-  <div id="player-container">
+  <p>Current URL: <span id="current-url"></span></p>
+  <p>Press <kbd style="border: 1px solid #000; padding: 2px 4px; border-radius: 50%;">&#9776;</kbd> to switch between local and remote source.</p>
+  <article>
     <video
       id="video"
       width="640"
       height="480"
       controls
     ></video>
-  </div>
+  </article>
 
   <button id="play" autofocus>Play / pause</button>
 
@@ -24,7 +26,10 @@
 const manifestUri = 'https://storage.googleapis.com/shaka-demo-assets/angel-one-widevine/dash.mpd';
 
 function initApp() {
-  document.getElementById('current-url').textContent = window.location.href;
+  const currentUrl = document.getElementById('current-url');
+  if (currentUrl) {
+    currentUrl.textContent = window.location.href;
+  }
 
   shaka.polyfill.installAll();
 
