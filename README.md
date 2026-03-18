@@ -16,3 +16,8 @@ kepler virtual-device start # if you want to use an emulator, or:
 # vda connect $DEVICE_IP:5555 # if you want to connect to a real device
 kepler run-kepler build/armv7-debug/drmexample_armv7.vpkg
 ```
+
+## Most important files
+
+- [App.tsx](https://github.com/hejmsdz/drm-example/blob/main/src/App.tsx)
+- [index.html](https://github.com/hejmsdz/drm-example/blob/main/assets/index.html)
