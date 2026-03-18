@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video player test</title>
+</head>
+<body>
+  <div id="player-container">
+    <video
+      id="video"
+      width="640"
+      height="480"
+      controls
+    ></video>
+  </div>
+
+  <button id="play" autofocus>Play / pause</button>
+
+  <ul id="log"></ul>
+
+   <script src="./shaka-player.compiled.js"></script>
+   <script>
+const manifestUri = 'https://storage.googleapis.com/shaka-demo-assets/angel-one-widevine/dash.mpd';
+
+function initApp() {
+  document.getElementById('current-url').textContent = window.location.href;
+
+  shaka.polyfill.installAll();
+
+  if (shaka.Player.isBrowserSupported()) {
+    initPlayer();
+  } else {
+    console.error('Browser not supported!');
+  }
+}
+
+async function initPlayer() {
+  const video = document.getElementById('video');
+  if (!(video instanceof HTMLVideoElement)) {
+    throw new Error('Video element not found');
+  }
+
+  const player = new shaka.Player();
+  await player.attach(video);
+
+  player.addEventListener('error', onErrorEvent);
+
+  player.configure({
+    drm: {
+      servers: {
+        'com.widevine.alpha': 'https://cwip-shaka-proxy.appspot.com/no_auth',
+      },
+    },
+  });
+
+  try {
+    await player.load(manifestUri);
+    console.log('The video has now been loaded!');
+  } catch (e) {
+    onError(e);
+  }
+}
+
+function onErrorEvent(event) {
+  onError(event.detail);
+}
+
+function onError(error) {
+  console.error('Error code', error.code, 'object', error);
+
+  const log = document.getElementById('log');
+  if (log) {
+    log.innerHTML += `<li>${JSON.stringify(error)}</li>`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', initApp);
+
+document.getElementById('play')?.addEventListener('click', () => {
+  const player = document
+    .getElementById('player-container')
+    ?.querySelector('video');
+  if (player instanceof HTMLVideoElement) {
+    if (player.paused) {
+      player.play();
+    } else {
+      player.pause();
+    }
+  }
+});
+   </script>
+</body>
+</html>

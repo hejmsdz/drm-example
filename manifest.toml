@@ -1,7 +1,7 @@
 schema-version = 1
 
 [package]
-title = "Basic UI React Native Application for project drmexample"
+title = "DRM Example"
 version = "0.1.0"
 id = "com.amazondeveloper.drmexample"
 
@@ -11,3 +11,42 @@ id = "com.amazondeveloper.drmexample.main"
 runtime-module = "/com.amazon.kepler.keplerscript.runtime.loader_2@IKeplerScript_2_0"
 launch-type = "singleton"
 categories = ["com.amazon.category.main"]
+
+
+# Web renderer service for rendering web content
+[[wants.service]]
+id = "com.amazon.webview.renderer_service"
+
+# If the app needs video playback
+[[wants.service]]
+id = "com.amazon.media.server"
+[[wants.service]]
+id = "com.amazon.mediametrics.service"
+
+[[wants.service]]
+id = "com.amazon.mediabuffer.service"
+[[wants.service]]
+id = "com.amazon.mediatransform.service"
+
+# If the app needs audio playback
+[[wants.service]]
+id = "com.amazon.audio.stream"
+[[wants.service]]
+id = "com.amazon.audio.control"
+
+# If the app needs DRM playback
+[[wants.service]]
+id = "com.amazon.drm.key"
+[[wants.service]]
+id = "com.amazon.drm.crypto"
+[[needs.privilege]]
+id = "com.amazon.privilege.security.file-sharing"
+
+# Enable Group-IPC to access media services.
+[wants]
+[[wants.service]]
+id = "com.amazon.gipc.uuid.*"
+
+[offers]
+[[offers.service]]
+id = "com.amazon.gipc.uuid.*"
