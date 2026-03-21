@@ -26,13 +26,9 @@
 const manifestUri = 'https://storage.googleapis.com/shaka-demo-assets/angel-one-widevine/dash.mpd';
 
 function initApp() {
-  const currentUrl = document.getElementById('current-url');
-  if (currentUrl) {
-    currentUrl.textContent = window.location.href;
-  }
-
+  document.getElementById('current-url').textContent = window.location.href;
+  
   shaka.polyfill.installAll();
-
   if (shaka.Player.isBrowserSupported()) {
     initPlayer();
   } else {
@@ -83,15 +79,11 @@ function onError(error) {
 document.addEventListener('DOMContentLoaded', initApp);
 
 document.getElementById('play')?.addEventListener('click', () => {
-  const player = document
-    .getElementById('player-container')
-    ?.querySelector('video');
-  if (player instanceof HTMLVideoElement) {
-    if (player.paused) {
-      player.play();
-    } else {
-      player.pause();
-    }
+  const player = document.getElementById('video');
+  if (player.paused) {
+    player.play();
+  } else {
+    player.pause();
   }
 });
    </script>
